@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JOptionPane;
 
 public class CRUDSQLClientes implements DAOClientes {
 
@@ -50,6 +51,7 @@ public class CRUDSQLClientes implements DAOClientes {
         } finally {
             GestionarRecursos.cerrarPreparedStatement(consultaPreparada);
         }
+        GestionarRecursos.generarMensaje("Cliente creado con Éxito", "Creación de Cliente", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
@@ -76,6 +78,7 @@ public class CRUDSQLClientes implements DAOClientes {
         } finally {
             GestionarRecursos.cerrarPreparedStatement(consultaPreparada);
         }
+        GestionarRecursos.generarMensaje("Cliente editado con Éxito", "Edicion de Cliente", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
@@ -94,6 +97,7 @@ public class CRUDSQLClientes implements DAOClientes {
         } finally {
             GestionarRecursos.cerrarPreparedStatement(consultaPreparada);
         }
+        GestionarRecursos.generarMensaje("Cliente eliminado con Éxito", "Eliminación de Cliente", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public Cliente convierteElemento(ResultSet resultado) throws SQLException {

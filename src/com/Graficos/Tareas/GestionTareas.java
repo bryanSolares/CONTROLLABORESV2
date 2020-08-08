@@ -10,18 +10,25 @@ import com.Modelos.Tablas.ModeloTablaDetalleTareas;
 import com.Modelos.Tarea;
 import com.Modelos.TareaDetalle;
 import com.Recursos.GestionarRecursos;
-import java.awt.event.KeyEvent;
+import com.Recursos.ValidadoresFormas;
+import com.toedter.calendar.JDateChooser;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class GestionTareas extends javax.swing.JInternalFrame {
 
-    private ModeloComboParametros modeloCbPrioridad, modeloCbEstado, modeloCbResponsable;
-    private ModeloComboClientes modeloCbClientes;
-    private ModeloTablaDetalleTareas modeloTBDetallesTareas;
+    private final ModeloComboParametros modeloCbPrioridad, modeloCbEstado, modeloCbResponsable;
+    private final ModeloComboClientes modeloCbClientes;
+    private final ModeloTablaDetalleTareas modeloTBDetallesTareas;
     private final DAOManager manager;
     private Tarea tarea;
     private TareaDetalle tareaDetalle;
+    private final ValidadoresFormas validaForma;
 
     public GestionTareas(DAOManager manager) {
         initComponents();
@@ -32,11 +39,20 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         modeloCbResponsable = new ModeloComboParametros();
         modeloCbClientes = new ModeloComboClientes(manager.getDAOClientes());
         modeloTBDetallesTareas = new ModeloTablaDetalleTareas(manager.getDAOTareas());
+
+        validaForma = new ValidadoresFormas(this);
+
         cargarModelos();
+        agregarValidadoresACampos();
     }
 
     private void cargarModelos() {
         try {
+
+            JT_nombre.setText("");
+            JT_detalleDescripcion.setText("");
+            JT_tiempo_transcurrido.setText("00:00:00:000");
+
             modeloCbClientes.actualizar();
             modeloCbPrioridad.actualizarCombo(ModeloComboParametros.TIPO_PRIORIDAD);
             modeloCbEstado.actualizarCombo(ModeloComboParametros.TIPO_ESTADO_TAREA);
@@ -47,7 +63,10 @@ public class GestionTareas extends javax.swing.JInternalFrame {
             JC_tipoPrioridad.setModel(modeloCbPrioridad);
             JC_tipoEstado.setModel(modeloCbEstado);
             JC_tipoResponsable.setModel(modeloCbResponsable);
-            JT_detallesTarea.setModel(modeloTBDetallesTareas);
+            JT_datos.setModel(modeloTBDetallesTareas);
+
+            JD_fecha_inicio.setDate(new Date());
+            JD_fecha_fin.setDate(new Date());
         } catch (DAOException ex) {
             GestionarRecursos.propagarError(ex);
         }
@@ -58,7 +77,20 @@ public class GestionTareas extends javax.swing.JInternalFrame {
     }
 
     private void guardarDatos() {
+        if (tarea == null) {
+            tarea = new Tarea();
+        }
 
+        tarea.setTitulo(JT_nombre.getText());
+        tarea.setCliente(obtenerClienteSeleccionado());
+        tarea.setPrioridad(obtenerParametroSeleccionad(JC_tipoPrioridad));
+        tarea.setEstado(obtenerParametroSeleccionad(JC_tipoEstado));
+        tarea.setAreaResponsable(obtenerParametroSeleccionad(JC_tipoResponsable));
+        tarea.setFechaInicio(obtenerFecha(JD_fecha_inicio));
+        tarea.setFechaFin(obtenerFecha(JD_fecha_fin));
+        tarea.setDuracionTarea(JT_tiempo_transcurrido.getText());
+        tarea.obtenerListaDetalles().clear();
+        tarea.setListaDetalles(modeloTBDetallesTareas.getDataElements());
     }
 
     private Long obtenerClienteSeleccionado() {
@@ -67,6 +99,10 @@ public class GestionTareas extends javax.swing.JInternalFrame {
 
     private int obtenerParametroSeleccionad(JComboBox combo) {
         return ((Parametros) combo.getSelectedItem()).getId();
+    }
+
+    private LocalDateTime obtenerFecha(JDateChooser elemento) {
+        return elemento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     @SuppressWarnings("unchecked")
@@ -80,7 +116,7 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         JB_salir = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        JT_detallesTarea = new javax.swing.JTable();
+        JT_datos = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         JT_detalleDescripcion = new javax.swing.JTextArea();
         jLabel9 = new javax.swing.JLabel();
@@ -102,7 +138,8 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         JC_tipoResponsable = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        JT_tiempoTranscurrido = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        JT_tiempo_transcurrido = new javax.swing.JFormattedTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -114,6 +151,7 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         jToolBar4.setRollover(true);
         jToolBar4.add(jSeparator2);
 
+        JB_guardar.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         JB_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/Iconos/guardar.png"))); // NOI18N
         JB_guardar.setText("Guardar");
         JB_guardar.setFocusable(false);
@@ -126,6 +164,7 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         jToolBar4.add(JB_guardar);
         jToolBar4.add(jSeparator1);
 
+        JB_salir.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         JB_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/Iconos/salir.png"))); // NOI18N
         JB_salir.setText("Salir");
         JB_salir.setFocusable(false);
@@ -139,8 +178,8 @@ public class GestionTareas extends javax.swing.JInternalFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        JT_detallesTarea.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.darkGray, null, null));
-        JT_detallesTarea.setModel(new javax.swing.table.DefaultTableModel(
+        JT_datos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.darkGray, null, null));
+        JT_datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -151,17 +190,17 @@ public class GestionTareas extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        JT_detallesTarea.addMouseListener(new java.awt.event.MouseAdapter() {
+        JT_datos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JT_detallesTareaMouseClicked(evt);
+                JT_datosMouseClicked(evt);
             }
         });
-        JT_detallesTarea.addKeyListener(new java.awt.event.KeyAdapter() {
+        JT_datos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                JT_detallesTareaKeyPressed(evt);
+                JT_datosKeyPressed(evt);
             }
         });
-        jScrollPane1.setViewportView(JT_detallesTarea);
+        jScrollPane1.setViewportView(JT_datos);
 
         JT_detalleDescripcion.setColumns(20);
         JT_detalleDescripcion.setLineWrap(true);
@@ -175,28 +214,20 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         JB_agregarDetalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/Iconos/plus.png"))); // NOI18N
         JB_agregarDetalle.setFocusable(false);
         JB_agregarDetalle.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        JB_agregarDetalle.setOpaque(true);
         JB_agregarDetalle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JB_agregarDetalleActionPerformed(evt);
-            }
-        });
-        JB_agregarDetalle.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JB_agregarDetalleKeyPressed(evt);
             }
         });
 
         JB_eliminarDetalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/Iconos/minus.png"))); // NOI18N
         JB_eliminarDetalle.setFocusable(false);
         JB_eliminarDetalle.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        JB_eliminarDetalle.setOpaque(true);
         JB_eliminarDetalle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JB_eliminarDetalleActionPerformed(evt);
-            }
-        });
-        JB_eliminarDetalle.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JB_eliminarDetalleKeyPressed(evt);
             }
         });
 
@@ -232,7 +263,7 @@ public class GestionTareas extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -250,17 +281,51 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel4.setText("Prioridad");
 
+        JT_nombre.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+
+        JC_tipoEstado.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+
+        JC_tipoPrioridad.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel5.setText("Fecha Inicio");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel6.setText("Fecha Finalización");
 
+        JC_cliente.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+
+        JD_fecha_inicio.setDateFormatString("dd/MM/yyyy");
+        JD_fecha_inicio.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+
+        JD_fecha_fin.setDateFormatString("dd/MM/yyyy");
+        JD_fecha_fin.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+
         jLabel7.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel7.setText("Responsable Tarea");
 
+        JC_tipoResponsable.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+
         jLabel8.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel8.setText("Tiempo Transcurrido:");
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        JT_tiempo_transcurrido.setEditable(false);
+        JT_tiempo_transcurrido.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("hh:mm:ss"))));
+        JT_tiempo_transcurrido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        JT_tiempo_transcurrido.setText("00:00:00:000");
+        JT_tiempo_transcurrido.setFont(new java.awt.Font("Segoe UI Black", 0, 36)); // NOI18N
+        JT_tiempo_transcurrido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JT_tiempo_transcurridoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -295,14 +360,21 @@ public class GestionTareas extends javax.swing.JInternalFrame {
                             .addComponent(JD_fecha_fin, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(141, 141, 141))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(JT_tiempoTranscurrido, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(JC_tipoEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(JC_tipoResponsable, 0, 450, Short.MAX_VALUE))
-                                .addComponent(jLabel8)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(JC_tipoEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(JC_tipoResponsable, 0, 450, Short.MAX_VALUE))
+                            .addComponent(jLabel8))
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(JT_tiempo_transcurrido, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(163, 163, 163)
+                        .addComponent(jButton1)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,8 +409,10 @@ public class GestionTareas extends javax.swing.JInternalFrame {
                     .addComponent(JD_fecha_fin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel8)
-                .addGap(6, 6, 6)
-                .addComponent(JT_tiempoTranscurrido, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(JT_tiempo_transcurrido, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -366,17 +440,24 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JT_detallesTareaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JT_detallesTareaMouseClicked
+    private void JT_datosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JT_datosMouseClicked
 
-    }//GEN-LAST:event_JT_detallesTareaMouseClicked
+    }//GEN-LAST:event_JT_datosMouseClicked
 
-    private void JT_detallesTareaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JT_detallesTareaKeyPressed
+    private void JT_datosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JT_datosKeyPressed
 
-    }//GEN-LAST:event_JT_detallesTareaKeyPressed
+    }//GEN-LAST:event_JT_datosKeyPressed
 
     private void JB_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_guardarActionPerformed
-
-
+        if (validaForma.compruebaCamposValidados()) {
+            try {
+                guardarDatos();
+                manager.getDAOTareas().crear(tarea);
+                cargarModelos();
+            } catch (DAOException ex) {
+                GestionarRecursos.propagarError(ex);
+            }
+        }
     }//GEN-LAST:event_JB_guardarActionPerformed
 
     private void JB_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_salirActionPerformed
@@ -391,17 +472,13 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         eliminarDeDetalle();
     }//GEN-LAST:event_JB_eliminarDetalleActionPerformed
 
-    private void JB_agregarDetalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JB_agregarDetalleKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            agregarADetalle();
-        }
-    }//GEN-LAST:event_JB_agregarDetalleKeyPressed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        System.out.println(JC_cliente.getSelectedItem());
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void JB_eliminarDetalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JB_eliminarDetalleKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            eliminarDeDetalle();
-        }
-    }//GEN-LAST:event_JB_eliminarDetalleKeyPressed
+    private void JT_tiempo_transcurridoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JT_tiempo_transcurridoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JT_tiempo_transcurridoActionPerformed
 
     private void agregarADetalle() {
         if (!JT_detalleDescripcion.getText().equalsIgnoreCase("")) {
@@ -418,14 +495,13 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(this, "No puede agregar elementos vacios", "Agregar Detalle", JOptionPane.INFORMATION_MESSAGE);
         }
-
     }
 
     private void eliminarDeDetalle() {
-        if (JT_detallesTarea.getRowCount() > 0) {
+        if (JT_datos.getRowCount() > 0) {
             Long idSeleccionado;
-            if (JT_detallesTarea.getSelectedRow() >= 0) {
-                idSeleccionado = (Long) modeloTBDetallesTareas.getValueAt(JT_detallesTarea.getSelectedRow(), 1);
+            if (JT_datos.getSelectedRow() >= 0) {
+                idSeleccionado = (Long) modeloTBDetallesTareas.getValueAt(JT_datos.getSelectedRow(), 1);
             } else {
                 idSeleccionado = (Long) modeloTBDetallesTareas.getValueAt(modeloTBDetallesTareas.getRowCount() - 1, 1);
             }
@@ -433,8 +509,18 @@ public class GestionTareas extends javax.swing.JInternalFrame {
             modeloTBDetallesTareas.removeElementWithId(idSeleccionado);
             JT_detalleDescripcion.setText(tareaDetalle.getDescripcion());
         } else {
-            JOptionPane.showMessageDialog(this, "No existen elementos para eliminar", "Error al eliminar", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No elementos para eliminar", "Eliminar detalle", JOptionPane.INFORMATION_MESSAGE);
         }
+    }
+
+    private void agregarValidadoresACampos() {
+        validaForma.agregarCampoParaValidar(JT_nombre);
+        validaForma.agregarComboParaValidar(JC_cliente);
+        validaForma.agregarComboParaValidar(JC_tipoPrioridad);
+        validaForma.agregarComboParaValidar(JC_tipoEstado);
+        validaForma.agregarComboParaValidar(JC_tipoResponsable);
+        validaForma.agregarFechaParaValidar(JD_fecha_inicio);
+        validaForma.agregarFechaParaValidar(JD_fecha_fin);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -448,10 +534,11 @@ public class GestionTareas extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<Parametros> JC_tipoResponsable;
     private com.toedter.calendar.JDateChooser JD_fecha_fin;
     private com.toedter.calendar.JDateChooser JD_fecha_inicio;
+    private javax.swing.JTable JT_datos;
     private javax.swing.JTextArea JT_detalleDescripcion;
-    private javax.swing.JTable JT_detallesTarea;
     private javax.swing.JTextField JT_nombre;
-    private javax.swing.JTextField JT_tiempoTranscurrido;
+    private javax.swing.JFormattedTextField JT_tiempo_transcurrido;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

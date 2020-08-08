@@ -15,7 +15,7 @@ import java.util.Map;
 public class Main {
 
     public static void main(String arg[]) throws SQLException, DAOException {
-        GestorConexion conexion = new GestorConexion("sa", "CmSql2kXVI", "SOPORTE2\\sql2012", "SISCONTROLLAB_copia_PRINCIPAL");
+        GestorConexion conexion = new GestorConexion("sa", "CmSql2kXVI", "192.168.1.2\\sql2012", "SISCONTROLLAB_copia_PRINCIPAL");
         DAOManager manager = conexion.iniciarConexion(GestorConexion.SQLSERVER);
 //        Map<ResultSetMetaData, List<Cliente>> datos = manager.getDAOClientes().buscarTodos();
 //        List<String> encabezados = new ArrayList<>();

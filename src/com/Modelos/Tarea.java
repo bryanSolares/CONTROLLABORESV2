@@ -20,7 +20,7 @@ public class Tarea implements IModelos{
     private List<TareaDetalle> listaDetalles;
 
     public Tarea() {
-        this.duracionTarea = "00:00:00:00";
+        this.duracionTarea = "00:00:00:000";
         this.fechaInicio = LocalDateTime.now();
         this.fechaFin = LocalDateTime.now();
         listaDetalles = new ArrayList<>();
@@ -161,7 +161,9 @@ public class Tarea implements IModelos{
 
     @Override
     public String toString() {
-        return "Tarea{" + "id=" + id + ", titulo=" + titulo + ", proveedor=" + cliente + ", descripcion=" + descripcion + ", prioridad=" + prioridad + ", estado=" + estado + ", duracionTarea=" + duracionTarea + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + listaDetalles +'}';
+        return "Tarea{" + "id=" + id + ", titulo=" + titulo + ", proveedor=" + cliente 
+                + ", descripcion=" + descripcion + ", prioridad=" + prioridad + ", estado=" 
+                + estado + ", duracionTarea=" + duracionTarea + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + listaDetalles +'}';
     }
 
 }

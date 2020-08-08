@@ -42,16 +42,20 @@ public class GestionarRecursos {
         }
     }
 
-    public static void propagarError(Exception ex){
-        JOptionPane.showMessageDialog(null, ex + " " + ex.getLocalizedMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+    public static void propagarError(Exception ex) {
+        JOptionPane.showMessageDialog(null, ex, "ERROR", JOptionPane.ERROR_MESSAGE);
     }
 
-    public static void propagarError(Exception ex, String mensaje){
+    public static void propagarError(Exception ex, String mensaje) {
         JOptionPane.showMessageDialog(null, ex + " " + mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
     }
 
-    public static void propagarError(String mensaje){
-        JOptionPane.showMessageDialog(null,mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+    public static void propagarError(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public static void generarMensaje(String mensaje, String titulo, int tipo) {
+        JOptionPane.showMessageDialog(null, mensaje, titulo, tipo);
     }
 
 }

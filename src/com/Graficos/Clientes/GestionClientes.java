@@ -8,6 +8,7 @@ import com.Modelos.Parametros;
 import com.Modelos.Tablas.ModeloTablaClientes;
 import com.Recursos.GestionarRecursos;
 import com.Recursos.ValidadoresFormas;
+import javax.swing.JOptionPane;
 
 public class GestionClientes extends javax.swing.JInternalFrame {
 
@@ -140,67 +141,86 @@ public class GestionClientes extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("GESTION DE CLIENTES");
 
+        jPanel2.setBackground(new java.awt.Color(175, 68, 37));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(201, 166, 107));
         jLabel1.setText("Nombre");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(201, 166, 107));
         jLabel2.setText("Teléfono");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(201, 166, 107));
         jLabel3.setText("Tipo de Sistema");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(201, 166, 107));
         jLabel4.setText("Tipo de Cliente");
 
+        JT_telefono.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         JT_telefono.setEnabled(false);
 
+        JT_nombre.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         JT_nombre.setEnabled(false);
 
+        JC_tipoSistema.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         JC_tipoSistema.setEnabled(false);
 
+        JC_tipoCliente.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         JC_tipoCliente.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(201, 166, 107));
         jLabel5.setText("Nombre de Contacto");
 
+        JT_nombreContacto.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         JT_nombreContacto.setEnabled(false);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(201, 166, 107));
         jLabel6.setText("Estado del Cliente");
 
+        jPanel4.setBackground(new java.awt.Color(175, 68, 37));
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
+        JR_activo.setBackground(new java.awt.Color(98, 109, 113));
         buttonGroup1.add(JR_activo);
         JR_activo.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        JR_activo.setForeground(new java.awt.Color(201, 166, 107));
         JR_activo.setText("Activo");
         JR_activo.setEnabled(false);
+        JR_activo.setOpaque(false);
 
+        JR_inactivo.setBackground(new java.awt.Color(98, 109, 113));
         buttonGroup1.add(JR_inactivo);
         JR_inactivo.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        JR_inactivo.setForeground(new java.awt.Color(201, 166, 107));
         JR_inactivo.setText("Inactivo");
         JR_inactivo.setEnabled(false);
+        JR_inactivo.setOpaque(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(138, Short.MAX_VALUE)
+                .addContainerGap(137, Short.MAX_VALUE)
                 .addComponent(JR_activo)
-                .addGap(93, 93, 93)
+                .addGap(96, 96, 96)
                 .addComponent(JR_inactivo)
-                .addGap(134, 134, 134))
+                .addGap(132, 132, 132))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JR_inactivo)
-                    .addComponent(JR_activo))
-                .addContainerGap(45, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(41, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JR_activo)
+                    .addComponent(JR_inactivo))
+                .addGap(37, 37, 37))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -257,9 +277,11 @@ public class GestionClientes extends javax.swing.JInternalFrame {
                 .addContainerGap(117, Short.MAX_VALUE))
         );
 
+        jPanel3.setBackground(new java.awt.Color(175, 68, 37));
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         JT_datos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.darkGray, null, null));
+        JT_datos.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         JT_datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -300,13 +322,18 @@ public class GestionClientes extends javax.swing.JInternalFrame {
                 .addGap(10, 10, 10))
         );
 
-        jToolBar1.setBackground(new java.awt.Color(255, 255, 255));
+        jToolBar1.setBackground(new java.awt.Color(175, 68, 37));
+        jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
+        jToolBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
+        jToolBar1.setDoubleBuffered(true);
+        jToolBar1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jToolBar1.setOpaque(false);
 
+        JB_nuevo.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         JB_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/Iconos/nuevo.png"))); // NOI18N
         JB_nuevo.setText("Nuevo");
         JB_nuevo.setFocusable(false);
-        JB_nuevo.setOpaque(true);
         JB_nuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JB_nuevoActionPerformed(evt);
@@ -315,11 +342,11 @@ public class GestionClientes extends javax.swing.JInternalFrame {
         jToolBar1.add(JB_nuevo);
         jToolBar1.add(jSeparator2);
 
+        JB_guardar.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         JB_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/Iconos/guardar.png"))); // NOI18N
         JB_guardar.setText("Guardar");
         JB_guardar.setEnabled(false);
         JB_guardar.setFocusable(false);
-        JB_guardar.setOpaque(true);
         JB_guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JB_guardarActionPerformed(evt);
@@ -327,11 +354,11 @@ public class GestionClientes extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(JB_guardar);
 
+        JB_editar.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         JB_editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/Iconos/editar.png"))); // NOI18N
         JB_editar.setText("Editar");
         JB_editar.setEnabled(false);
         JB_editar.setFocusable(false);
-        JB_editar.setOpaque(true);
         JB_editar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JB_editarActionPerformed(evt);
@@ -339,11 +366,11 @@ public class GestionClientes extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(JB_editar);
 
+        JB_eliminar.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         JB_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/Iconos/borrar.png"))); // NOI18N
         JB_eliminar.setText("Eliminar");
         JB_eliminar.setEnabled(false);
         JB_eliminar.setFocusable(false);
-        JB_eliminar.setOpaque(true);
         JB_eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JB_eliminarActionPerformed(evt);
@@ -352,11 +379,11 @@ public class GestionClientes extends javax.swing.JInternalFrame {
         jToolBar1.add(JB_eliminar);
         jToolBar1.add(jSeparator1);
 
+        JB_cancelar.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         JB_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/Iconos/cancelar.png"))); // NOI18N
         JB_cancelar.setText("Cancelar");
         JB_cancelar.setEnabled(false);
         JB_cancelar.setFocusable(false);
-        JB_cancelar.setOpaque(true);
         JB_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JB_cancelarActionPerformed(evt);
@@ -364,10 +391,10 @@ public class GestionClientes extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(JB_cancelar);
 
+        JB_salir.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         JB_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/Iconos/salir.png"))); // NOI18N
         JB_salir.setText("Salir");
         JB_salir.setFocusable(false);
-        JB_salir.setOpaque(true);
         JB_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JB_salirActionPerformed(evt);
@@ -444,23 +471,6 @@ public class GestionClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JT_datosMouseClicked
 
     private void JT_datosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JT_datosKeyPressed
-//        if (evt.getKeyCode() == KeyEvent.VK_UP || evt.getKeyCode() == KeyEvent.VK_DOWN) {
-//
-////            cliente = modeloTablaClientes.getElementById(id);
-////            cargarDatos();
-//            Long id = 0L;
-//            switch (evt.getKeyCode()) {
-//                case KeyEvent.VK_UP:
-//                    id += obtenerElementoSeleccionado();
-//                    break;
-//                case KeyEvent.VK_DOWN:
-//                    id -= obtenerElementoSeleccionado();
-//                    break;
-//            }
-//            //cliente = modeloTablaClientes.getElementById(id);
-//            //cargarDatos();
-//            System.out.println(id);
-//        }
 
     }//GEN-LAST:event_JT_datosKeyPressed
 
@@ -481,17 +491,21 @@ public class GestionClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JB_editarActionPerformed
 
     private void JB_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_eliminarActionPerformed
-        try {
-            Long id = obtenerIdElementoSeleccionado();
-            manager.borrar(id);
-            cliente = null;
-            cargarDatos();
-            modeloTablaClientes.removeElementWithId(id);
-            bloquearDesbloquerBotones(true, false, false, false, false);
-            bloquearDesbloquerCampos(false, false, false, false, false, false);
-            JT_datos.clearSelection();
-        } catch (DAOException ex) {
-            GestionarRecursos.propagarError(ex);
+
+        if (JOptionPane.showConfirmDialog(rootPane, "Seguro que quiere eliminar este regitros", "Eliminación de Cliente",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            try {
+                Long id = obtenerIdElementoSeleccionado();
+                manager.borrar(id);
+                cliente = null;
+                cargarDatos();
+                modeloTablaClientes.removeElementWithId(id);
+                bloquearDesbloquerBotones(true, false, false, false, false);
+                bloquearDesbloquerCampos(false, false, false, false, false, false);
+                JT_datos.clearSelection();
+            } catch (DAOException ex) {
+                GestionarRecursos.propagarError(ex);
+            }
         }
     }//GEN-LAST:event_JB_eliminarActionPerformed
 

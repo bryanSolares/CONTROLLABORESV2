@@ -1,5 +1,6 @@
 package com.Recursos;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,13 @@ public class ValidadoresFormas {
     private final List<JComboBox> listaCombos;
     private final List<JCheckBox> listaChecks;
     private final List<TableModel> listaTablas;
+    private final List<JDateChooser> listaCamposFecha;
 
     public final static int CAMPOS_VALIDADO = 1;
     public final static int COMBOS_VALIDADOS = 2;
     public final static int CHECKS_VALIDADOS = 3;
     public final static int TABLAS_VALIDADAS = 4;
+    public final static int FECHAS_VALIDADAS = 5;
 
     public ValidadoresFormas(Component componentePadre) {
         this.componentePadre = componentePadre;
@@ -28,23 +31,31 @@ public class ValidadoresFormas {
         listaCombos = new ArrayList<>();
         listaChecks = new ArrayList<>();
         listaTablas = new ArrayList<>();
+        listaCamposFecha = new ArrayList<>();
     }
 
-    public boolean comprobarCampos() {
-        return !listaCamposTexto.stream().anyMatch(c -> c.getText().equals(""));
+    private boolean comprobarCampos() {
+        return listaCamposTexto.stream().anyMatch(c -> c.getText().equals(""));
     }
 
-    public boolean comprobarCombos() {
-        return !listaCombos.stream().anyMatch(elemento -> elemento.getSelectedItem() == null);
+    private boolean comprobarCombos() {
+        return listaCombos.stream().anyMatch(elemento -> elemento.getSelectedItem() == null);
     }
 
-    public boolean comprobarChecks() {
-        return !listaChecks.stream().anyMatch(elemento -> elemento.isSelected());
+    private boolean comprobarChecks() {
+        return listaChecks.stream().anyMatch(elemento -> elemento.isSelected());
     }
 
-    public boolean comprobarTablas() {
-        listaTablas.forEach(System.out::println);
-        return !listaTablas.stream().anyMatch(elemento -> elemento.getRowCount() == 0);
+    private boolean comprobarTablas() {
+        return listaTablas.stream().anyMatch(elemento -> elemento.getRowCount() == 0);
+    }
+
+    private boolean comprobarFechas() {
+        return listaCamposFecha.stream().anyMatch(elemento -> elemento.getDate() == null);
+    }
+
+    private boolean comprobarFechaInicialMenorFinalMayor() {
+        return listaCamposFecha.get(0).getDate().after(listaCamposFecha.get(1).getDate());
     }
 
     public void devuelveMensaje(int tipo) {
@@ -60,9 +71,14 @@ public class ValidadoresFormas {
             case CHECKS_VALIDADOS:
                 JOptionPane.showMessageDialog(componentePadre, "Debe seleccionar por lo menos una opción del listado", "Error", JOptionPane.ERROR_MESSAGE);
                 listaCombos.stream().filter(elemento -> elemento.getSelectedItem() == null).forEach(elemento -> elemento.requestFocus());
+                break;
             case TABLAS_VALIDADAS:
                 JOptionPane.showMessageDialog(componentePadre, "Todas las tablas deben tener por lo menos un elemento", "Error", JOptionPane.ERROR_MESSAGE);
                 //listaCombos.stream().filter(elemento -> elemento.getSelectedItem() == null).forEach(elemento -> elemento.requestFocus());
+                break;
+            case FECHAS_VALIDADAS:
+                JOptionPane.showMessageDialog(componentePadre, "Seleccionar Fechas Válidas", "Error", JOptionPane.ERROR_MESSAGE);
+                listaCamposFecha.stream().filter(elemento -> elemento.getDate() == null).forEach(elemento -> elemento.requestFocus());
                 break;
         }
 
@@ -84,20 +100,35 @@ public class ValidadoresFormas {
         listaTablas.add(tabla);
     }
 
+    public void agregarFechaParaValidar(JDateChooser fechero) {
+        listaCamposFecha.add(fechero);
+    }
+
     public boolean compruebaCamposValidados() {
         if (!listaCamposTexto.isEmpty()) {
-            if (!comprobarCampos()) {
+            if (comprobarCampos()) {
                 devuelveMensaje(CAMPOS_VALIDADO);
                 return false;
             }
-        } else if (!listaCombos.isEmpty()) {
-            if (!comprobarCombos()) {
+        }
+        if (!listaCombos.isEmpty()) {
+            if (comprobarCombos()) {
                 devuelveMensaje(COMBOS_VALIDADOS);
                 return false;
             }
-        } else if (!listaChecks.isEmpty()) {
-            if (!comprobarChecks()) {
+        }
+        if (!listaChecks.isEmpty()) {
+            if (comprobarChecks()) {
                 devuelveMensaje(CHECKS_VALIDADOS);
+                return false;
+            }
+        }
+        if (!listaCamposFecha.isEmpty()) {
+            if (comprobarFechas()) {
+                devuelveMensaje(FECHAS_VALIDADAS);
+                return false;
+            } else if (comprobarFechaInicialMenorFinalMayor()) {
+                devuelveMensaje(FECHAS_VALIDADAS);
                 return false;
             }
         }

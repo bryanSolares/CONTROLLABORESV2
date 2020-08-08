@@ -12,13 +12,12 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JOptionPane;
 
 public class CRUDSQLTareas implements DAOTareas {
 
@@ -86,12 +85,14 @@ public class CRUDSQLTareas implements DAOTareas {
             GestionarRecursos.propagarError(ex);
         } finally {
             try {
+
                 conexion.setAutoCommit(true);
                 GestionarRecursos.cerrarPreparedStatement(consultaPreparada);
             } catch (SQLException ex) {
                 GestionarRecursos.propagarError(ex);
             }
         }
+        GestionarRecursos.generarMensaje("Tarea creada con Éxito", "Creación de Tarea", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void crearDetalles(Tarea tarea, Long idDisponible) throws DAOException {
@@ -160,6 +161,7 @@ public class CRUDSQLTareas implements DAOTareas {
                 GestionarRecursos.propagarError(ex);
             }
         }
+        GestionarRecursos.generarMensaje("Tarea modificada con Éxito", "Edición de Tarea", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
@@ -178,6 +180,7 @@ public class CRUDSQLTareas implements DAOTareas {
         } finally {
             GestionarRecursos.cerrarPreparedStatement(consultaPreparada);
         }
+        GestionarRecursos.generarMensaje("Tarea borrada con Éxito", "Eliminación de Tarea", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void borrarDetalles(Tarea tarea) throws DAOException {
@@ -429,8 +432,8 @@ public class CRUDSQLTareas implements DAOTareas {
         } catch (SQLException ex) {
             GestionarRecursos.propagarError(ex);
         } finally {
-            //GestionarRecursos.cerrarPreparedStatement(consultaPreparada);
-            //GestionarRecursos.cerrarResultSet(resultados);
+            GestionarRecursos.cerrarPreparedStatement(consultaPreparada);
+            GestionarRecursos.cerrarResultSet(resultados);
         }
         return datosTabla;
     }

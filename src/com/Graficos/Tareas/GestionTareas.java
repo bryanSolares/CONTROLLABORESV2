@@ -15,8 +15,6 @@ import com.toedter.calendar.JDateChooser;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -57,7 +55,7 @@ public class GestionTareas extends javax.swing.JInternalFrame {
             modeloCbPrioridad.actualizarCombo(ModeloComboParametros.TIPO_PRIORIDAD);
             modeloCbEstado.actualizarCombo(ModeloComboParametros.TIPO_ESTADO_TAREA);
             modeloCbResponsable.actualizarCombo(ModeloComboParametros.TIPO_REPONSABLE_SOPORTE);
-            modeloTBDetallesTareas.actualizarModelo();
+            modeloTBDetallesTareas.actualizarModelo(0L);
 
             JC_cliente.setModel(modeloCbClientes);
             JC_tipoPrioridad.setModel(modeloCbPrioridad);
@@ -72,8 +70,25 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         }
     }
 
-    private void cargarDatos() {
-
+    public void cargarDatos() {
+        if (tarea != null) {
+            JT_nombre.setText(tarea.getTitulo());
+            JC_cliente.setSelectedItem(modeloCbClientes.obtenerElementoPorId(tarea.getCliente()));
+            JC_tipoEstado.setSelectedItem(Parametros.devuelveValorParametro(tarea.getEstado(), Parametros.DEVUELVE_PARAMETRO));
+            JC_tipoResponsable.setSelectedItem(Parametros.devuelveValorParametro(tarea.getAreaResponsable(), Parametros.DEVUELVE_PARAMETRO));
+            JC_tipoPrioridad.setSelectedItem(Parametros.devuelveValorParametro(tarea.getPrioridad(), Parametros.DEVUELVE_PARAMETRO));
+            
+            JD_fecha_inicio.setDate(java.sql.Date.valueOf(tarea.getFechaInicio().toLocalDate()));
+            JD_fecha_fin.setDate(java.sql.Date.valueOf(tarea.getFechaFin().toLocalDate()));
+            JT_tiempo_transcurrido.setText(tarea.getDuracionTarea());
+            try {
+                modeloTBDetallesTareas.actualizarModelo(tarea.obtenerListaDetalles());
+            } catch (DAOException ex) {
+                GestionarRecursos.propagarError(ex);
+            }
+        } else {
+            cargarModelos();
+        }
     }
 
     private void guardarDatos() {
@@ -141,7 +156,6 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         JT_tiempo_transcurrido = new javax.swing.JFormattedTextField();
 
-        setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
@@ -522,6 +536,15 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         validaForma.agregarFechaParaValidar(JD_fecha_inicio);
         validaForma.agregarFechaParaValidar(JD_fecha_fin);
     }
+
+    public void setTarea(Tarea tarea) {
+        this.tarea = tarea;
+    }
+
+    public void setTareaDetalle(TareaDetalle tareaDetalle) {
+        this.tareaDetalle = tareaDetalle;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JB_agregarDetalle;

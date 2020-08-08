@@ -3,19 +3,30 @@ package com.Modelos.Tablas;
 import com.DAO.DAOException;
 import com.DAO.DAOTareas;
 import com.Modelos.TareaDetalle;
+import java.util.List;
 
 public class ModeloTablaDetalleTareas extends ModeloTablaGeneral<TareaDetalle, DAOTareas> {
-
-    private Long idTarea;
 
     public ModeloTablaDetalleTareas(DAOTareas solicitaModelo) {
         super(solicitaModelo);
     }
 
-    @Override
-    public void actualizarModelo() throws DAOException {
+    public void actualizarModelo(Long idTarea) throws DAOException {
         resultadoSQL = solicitaModelo.buscarDetalles(idTarea == null ? 0 : idTarea);
         super.actualizarModelo();
+    }
+
+    public void actualizarModelo(List<TareaDetalle> listadoDatos) throws DAOException {
+
+        if (listadoDatos != null) {
+            resultadoSQL = solicitaModelo.buscarDetalles(0L);
+            this.listaDatos = listadoDatos;
+            this.metadatos = resultadoSQL.keySet().iterator().next();
+            fireTableDataChanged();
+        } else {
+            super.actualizarModelo();
+        }
+
     }
 
     @Override
@@ -37,18 +48,14 @@ public class ModeloTablaDetalleTareas extends ModeloTablaGeneral<TareaDetalle, D
 
         switch (columnIndex) {
             case 0:
-                return detalle.getIdTarea();
-            case 1:
                 return detalle.getIdDetalle();
+            case 1:
+                return detalle.getIdTarea();
             case 2:
                 return detalle.getDescripcion();
             default:
                 return "";
         }
-    }
-
-    public void setIdTarea(Long idTarea) {
-        this.idTarea = idTarea;
     }
 
 }

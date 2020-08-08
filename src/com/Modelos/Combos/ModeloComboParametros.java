@@ -3,7 +3,7 @@ package com.Modelos.Combos;
 import com.Modelos.Parametros;
 import java.util.List;
 
-public class ModeloComboParametros extends ModeloComboGeneral <Parametros>{
+public class ModeloComboParametros extends ModeloComboGeneral<Parametros> {
 
     private Parametros parametros;
     public static final int TIPO_CLIENTE = 1;
@@ -53,6 +53,11 @@ public class ModeloComboParametros extends ModeloComboGeneral <Parametros>{
     @Override
     public Parametros obtenerElementoSeleccionado() {
         return null;
+    }
+
+    @Override
+    public Parametros obtenerElementoPorId(Long id) {
+        return datos.stream().filter(e -> e.getId() == id.intValue()).findFirst().get();
     }
 
 }

@@ -135,7 +135,6 @@ public class GestionClientes extends javax.swing.JInternalFrame {
         JB_cancelar = new javax.swing.JButton();
         JB_salir = new javax.swing.JButton();
 
-        setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
@@ -192,7 +191,6 @@ public class GestionClientes extends javax.swing.JInternalFrame {
         JR_activo.setForeground(new java.awt.Color(201, 166, 107));
         JR_activo.setText("Activo");
         JR_activo.setEnabled(false);
-        JR_activo.setOpaque(false);
 
         JR_inactivo.setBackground(new java.awt.Color(98, 109, 113));
         buttonGroup1.add(JR_inactivo);
@@ -200,7 +198,6 @@ public class GestionClientes extends javax.swing.JInternalFrame {
         JR_inactivo.setForeground(new java.awt.Color(201, 166, 107));
         JR_inactivo.setText("Inactivo");
         JR_inactivo.setEnabled(false);
-        JR_inactivo.setOpaque(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);

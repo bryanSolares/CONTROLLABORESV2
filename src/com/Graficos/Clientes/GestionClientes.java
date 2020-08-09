@@ -143,19 +143,19 @@ public class GestionClientes extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(175, 68, 37));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(201, 166, 107));
         jLabel1.setText("Nombre");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(201, 166, 107));
         jLabel2.setText("Teléfono");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(201, 166, 107));
         jLabel3.setText("Tipo de Sistema");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(201, 166, 107));
         jLabel4.setText("Tipo de Cliente");
 
@@ -171,14 +171,14 @@ public class GestionClientes extends javax.swing.JInternalFrame {
         JC_tipoCliente.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         JC_tipoCliente.setEnabled(false);
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(201, 166, 107));
         jLabel5.setText("Nombre de Contacto");
 
         JT_nombreContacto.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         JT_nombreContacto.setEnabled(false);
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(201, 166, 107));
         jLabel6.setText("Estado del Cliente");
 
@@ -187,14 +187,14 @@ public class GestionClientes extends javax.swing.JInternalFrame {
 
         JR_activo.setBackground(new java.awt.Color(98, 109, 113));
         buttonGroup1.add(JR_activo);
-        JR_activo.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        JR_activo.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         JR_activo.setForeground(new java.awt.Color(201, 166, 107));
         JR_activo.setText("Activo");
         JR_activo.setEnabled(false);
 
         JR_inactivo.setBackground(new java.awt.Color(98, 109, 113));
         buttonGroup1.add(JR_inactivo);
-        JR_inactivo.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        JR_inactivo.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         JR_inactivo.setForeground(new java.awt.Color(201, 166, 107));
         JR_inactivo.setText("Inactivo");
         JR_inactivo.setEnabled(false);
@@ -308,7 +308,7 @@ public class GestionClientes extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
         );
         jPanel3Layout.setVerticalGroup(

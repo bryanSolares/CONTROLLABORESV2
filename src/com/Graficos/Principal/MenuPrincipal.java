@@ -102,7 +102,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         editMenu.add(copyMenuItem);
 
         pasteMenuItem.setMnemonic('p');
-        pasteMenuItem.setText("Visualizar Tareas");
+        pasteMenuItem.setText("VISUALIZAR TAREAS");
+        pasteMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pasteMenuItemActionPerformed(evt);
+            }
+        });
         editMenu.add(pasteMenuItem);
 
         deleteMenuItem.setMnemonic('d');
@@ -179,8 +184,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
             Tarea tarea = manager.getDAOTareas().buscarUno(40385L);
             GestionTareas gt = new GestionTareas(manager);
             this.desktopPane.add(gt);
-            //gt.setTarea(tarea);
-            //gt.cargarDatos();
+            gt.setTarea(tarea);
+            gt.cargarDatos();
             gt.show();
         } catch (DAOException ex) {
             Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
@@ -198,6 +203,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void JM_salirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JM_salirMousePressed
         System.exit(0);
     }//GEN-LAST:event_JM_salirMousePressed
+
+    private void pasteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteMenuItemActionPerformed
+        ListadoTareas lt = new ListadoTareas();
+        this.desktopPane.add(lt);
+        lt.show();
+    }//GEN-LAST:event_pasteMenuItemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

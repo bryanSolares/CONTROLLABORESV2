@@ -77,7 +77,7 @@ public class GestionTareas extends javax.swing.JInternalFrame {
             JC_tipoEstado.setSelectedItem(Parametros.devuelveValorParametro(tarea.getEstado(), Parametros.DEVUELVE_PARAMETRO));
             JC_tipoResponsable.setSelectedItem(Parametros.devuelveValorParametro(tarea.getAreaResponsable(), Parametros.DEVUELVE_PARAMETRO));
             JC_tipoPrioridad.setSelectedItem(Parametros.devuelveValorParametro(tarea.getPrioridad(), Parametros.DEVUELVE_PARAMETRO));
-            
+
             JD_fecha_inicio.setDate(java.sql.Date.valueOf(tarea.getFechaInicio().toLocalDate()));
             JD_fecha_fin.setDate(java.sql.Date.valueOf(tarea.getFechaFin().toLocalDate()));
             JT_tiempo_transcurrido.setText(tarea.getDuracionTarea());
@@ -86,6 +86,8 @@ public class GestionTareas extends javax.swing.JInternalFrame {
             } catch (DAOException ex) {
                 GestionarRecursos.propagarError(ex);
             }
+            
+            JC_cliente.setEnabled(false);
         } else {
             cargarModelos();
         }
@@ -160,12 +162,14 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("GESTION DE TAREAS");
+        setFont(new java.awt.Font("Ubuntu", 1, 13)); // NOI18N
 
         jToolBar4.setBackground(new java.awt.Color(255, 255, 255));
+        jToolBar4.setFloatable(false);
         jToolBar4.setRollover(true);
         jToolBar4.add(jSeparator2);
 
-        JB_guardar.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        JB_guardar.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         JB_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/Iconos/guardar.png"))); // NOI18N
         JB_guardar.setText("Guardar");
         JB_guardar.setFocusable(false);
@@ -178,7 +182,7 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         jToolBar4.add(JB_guardar);
         jToolBar4.add(jSeparator1);
 
-        JB_salir.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        JB_salir.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         JB_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/Iconos/salir.png"))); // NOI18N
         JB_salir.setText("Salir");
         JB_salir.setFocusable(false);
@@ -222,7 +226,7 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         JT_detalleDescripcion.setWrapStyleWord(true);
         jScrollPane2.setViewportView(JT_detalleDescripcion);
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel9.setText("Detalles");
 
         JB_agregarDetalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/Iconos/plus.png"))); // NOI18N
@@ -283,16 +287,16 @@ public class GestionTareas extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel1.setText("Titulo Tarea");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel2.setText("Cliente");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel3.setText("Estado");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel4.setText("Prioridad");
 
         JT_nombre.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -301,10 +305,10 @@ public class GestionTareas extends javax.swing.JInternalFrame {
 
         JC_tipoPrioridad.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel5.setText("Fecha Inicio");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel6.setText("Fecha Finalización");
 
         JC_cliente.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -315,12 +319,12 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         JD_fecha_fin.setDateFormatString("dd/MM/yyyy");
         JD_fecha_fin.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel7.setText("Responsable Tarea");
 
         JC_tipoResponsable.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel8.setText("Tiempo Transcurrido:");
 
         jButton1.setText("jButton1");
@@ -466,7 +470,23 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         if (validaForma.compruebaCamposValidados()) {
             try {
                 guardarDatos();
-                manager.getDAOTareas().crear(tarea);
+                
+                if (tarea.getId() == null) {
+                    if (!comprobarEstadoFinalizado() && !comprobarTiempoDistintoAInicial()) {
+                        manager.getDAOTareas().crear(tarea);
+                    } else {
+                        GestionarRecursos.generarMensaje("No puede crear una tarea si el estado es finalizado o sin tiempo definido", "Creación no admitida", JOptionPane.INFORMATION_MESSAGE);
+                        return;
+                    }
+                } else {
+                    if (comprobarEstadoFinalizado()) {
+                        if (!comprobarTiempoDistintoAInicial()) {
+                            GestionarRecursos.generarMensaje("No puede finalizar la tarea sin indicar tiempo invertido", "Finalización de Tarea", JOptionPane.INFORMATION_MESSAGE);
+                            return;
+                        }
+                    }
+                    manager.getDAOTareas().editar(tarea);
+                }
                 cargarModelos();
             } catch (DAOException ex) {
                 GestionarRecursos.propagarError(ex);
@@ -537,12 +557,20 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         validaForma.agregarFechaParaValidar(JD_fecha_fin);
     }
 
-    public void setTarea(Tarea tarea) {
-        this.tarea = tarea;
+    private boolean comprobarEstadoFinalizado() {
+        return ((Parametros) modeloCbEstado.getSelectedItem()).equals(Parametros.FINAL);
     }
 
-    public void setTareaDetalle(TareaDetalle tareaDetalle) {
-        this.tareaDetalle = tareaDetalle;
+    private boolean comprobarTiempoDistintoAInicial() {
+        return JT_tiempo_transcurrido.equals("00:00:00:000");
+    }
+    
+    private boolean comprobarEstadoInicial(){
+        return ((Parametros) modeloCbEstado.getSelectedItem()).equals(Parametros.INICIAL);
+    }
+
+    public void setTarea(Tarea tarea) {
+        this.tarea = tarea;
     }
 
 

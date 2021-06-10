@@ -9,11 +9,11 @@ public class ModeloTablaDetalleTareas extends ModeloTablaGeneral<TareaDetalle, D
 
     public ModeloTablaDetalleTareas(DAOTareas solicitaModelo) {
         super(solicitaModelo);
-    }
+    } 
 
     public void actualizarModelo(Long idTarea) throws DAOException {
-        resultadoSQL = solicitaModelo.buscarDetalles(idTarea == null ? 0 : idTarea);
-        super.actualizarModelo();
+            resultadoSQL = solicitaModelo.buscarDetalles(idTarea == null ? 0 : idTarea);
+            super.actualizarModelo();
     }
 
     public void actualizarModelo(List<TareaDetalle> listadoDatos) throws DAOException {

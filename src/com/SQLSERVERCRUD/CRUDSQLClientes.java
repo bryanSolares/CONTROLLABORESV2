@@ -141,8 +141,8 @@ public class CRUDSQLClientes implements DAOClientes {
         } catch (SQLException e) {
             GestionarRecursos.propagarError(e);
         } finally {
-      //      GestionarRecursos.cerrarPreparedStatement(consultaPreparada);
-       //     GestionarRecursos.cerrarResultSet(resultados);
+            GestionarRecursos.cerrarPreparedStatement(consultaPreparada);
+            GestionarRecursos.cerrarResultSet(resultados);
         }
         return datosTabla;
     }

@@ -15,7 +15,6 @@ public abstract class ModeloTablaGeneral<T, D> extends AbstractTableModel {
     protected D solicitaModelo;
     protected Map<ResultSetMetaData, List<T>> resultadoSQL = new HashMap<>();
     protected List<T> listaDatos = new ArrayList<>();
-    protected List<String> listaEncabezados = new ArrayList<>();
     protected ResultSetMetaData metadatos;
 
     public ModeloTablaGeneral(D solicitaModelo) {
@@ -63,14 +62,12 @@ public abstract class ModeloTablaGeneral<T, D> extends AbstractTableModel {
     }
 
     public void addElementToData(T element) {
-        //if (!listaDatos.contains(element)) {
             this.listaDatos.add(element);
             this.fireTableDataChanged();
-        //}
     }
 
     public void removeElementWithIndex(int index) {
-        if (index <= listaDatos.size() && index != -1) {
+        if (index <= listaDatos.size() && index > -1) {
             this.listaDatos.remove(index);
             this.fireTableDataChanged();
         }

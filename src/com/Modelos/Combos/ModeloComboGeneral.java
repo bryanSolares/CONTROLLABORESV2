@@ -25,7 +25,6 @@ public abstract class ModeloComboGeneral<T> extends DefaultComboBoxModel {
         }
     }
 
-    public abstract T obtenerElementoSeleccionado();
     public abstract T obtenerElementoPorId(Long id);
 
 }

@@ -85,7 +85,6 @@ public class CRUDSQLTareas implements DAOTareas {
             GestionarRecursos.propagarError(ex);
         } finally {
             try {
-
                 conexion.setAutoCommit(true);
                 GestionarRecursos.cerrarPreparedStatement(consultaPreparada);
             } catch (SQLException ex) {
@@ -96,7 +95,8 @@ public class CRUDSQLTareas implements DAOTareas {
     }
 
     private void crearDetalles(Tarea tarea, Long idDisponible) throws DAOException {
-        try {
+           
+        try { 
             PreparedStatement insercionDetalle = conexion.prepareStatement(agregarDetalleTarea);
             tarea.obtenerListaDetalles().forEach(e -> {
                 try {

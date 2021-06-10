@@ -1,0 +1,11 @@
+package com.Modelos.Combos;
+
+public enum CBTiposCarga {
+    TIPO_CLIENTE,
+    TIPO_PRIORIDAD,
+    TIPO_ESTADO_TAREA,
+    TIPO_ESTADO_CLIENTE,
+    TIPO_REPONSABLE_SOPORTE,
+    TIPO_SISTEMA,
+    TIPO_CAPACITACION,
+}

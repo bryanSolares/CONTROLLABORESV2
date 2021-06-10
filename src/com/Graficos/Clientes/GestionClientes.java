@@ -3,6 +3,7 @@ package com.Graficos.Clientes;
 import com.DAO.DAOClientes;
 import com.DAO.DAOException;
 import com.Modelos.Cliente;
+import com.Modelos.Combos.CBTiposCarga;
 import com.Modelos.Combos.ModeloComboParametros;
 import com.Modelos.Parametros;
 import com.Modelos.Tablas.ModeloTablaClientes;
@@ -35,8 +36,8 @@ public class GestionClientes extends javax.swing.JInternalFrame {
             modeloTablaClientes.actualizarModelo();
             JT_datos.setModel(modeloTablaClientes);
 
-            modeloCbTipoCliente.actualizarCombo(ModeloComboParametros.TIPO_CLIENTE);
-            modeloCbTipoSistema.actualizarCombo(ModeloComboParametros.TIPO_SISTEMA);
+            modeloCbTipoCliente.actualizarCombo(CBTiposCarga.TIPO_CLIENTE);
+            modeloCbTipoSistema.actualizarCombo(CBTiposCarga.TIPO_SISTEMA);
 
             JC_tipoCliente.setModel(modeloCbTipoCliente);
             JC_tipoSistema.setModel(modeloCbTipoSistema);

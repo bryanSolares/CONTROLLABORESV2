@@ -27,11 +27,6 @@ public class ModeloComboClientes extends ModeloComboGeneral<Cliente> {
     }
 
     @Override
-    public Cliente obtenerElementoSeleccionado() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public Cliente obtenerElementoPorId(Long id) {
         return datos.stream().filter(e -> Objects.equals(e.getId(), id)).findFirst().get();
     }

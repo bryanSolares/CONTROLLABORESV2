@@ -6,13 +6,6 @@ import java.util.List;
 public class ModeloComboParametros extends ModeloComboGeneral<Parametros> {
 
     private Parametros parametros;
-    public static final int TIPO_CLIENTE = 1;
-    public static final int TIPO_PRIORIDAD = 2;
-    public static final int TIPO_ESTADO_TAREA = 3;
-    public static final int TIPO_ESTADO_CLIENTE = 4;
-    public static final int TIPO_REPONSABLE_SOPORTE = 5;
-    public static final int TIPO_SISTEMA = 6;
-    public static final int TIPO_CAPACITACION = 7;
 
     public ModeloComboParametros() {
         parametros = Parametros.SIN_DEFINIR;
@@ -23,7 +16,7 @@ public class ModeloComboParametros extends ModeloComboGeneral<Parametros> {
         parametros = Parametros.SIN_DEFINIR;
     }
 
-    public void actualizarCombo(int tipoActualizacion) {
+        public void actualizarCombo(CBTiposCarga tipoActualizacion) {
         switch (tipoActualizacion) {
             case TIPO_CLIENTE:
                 datos = parametros.devuelveParametrosTipoCliente();
@@ -48,11 +41,6 @@ public class ModeloComboParametros extends ModeloComboGeneral<Parametros> {
                 break;
         }
         super.actualizar();
-    }
-
-    @Override
-    public Parametros obtenerElementoSeleccionado() {
-        return null;
     }
 
     @Override

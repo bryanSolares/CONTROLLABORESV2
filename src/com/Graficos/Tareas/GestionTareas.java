@@ -3,6 +3,7 @@ package com.Graficos.Tareas;
 import com.DAO.DAOException;
 import com.DAO.Managers.DAOManager;
 import com.Modelos.Cliente;
+import com.Modelos.Combos.CBTiposCarga;
 import com.Modelos.Combos.ModeloComboClientes;
 import com.Modelos.Combos.ModeloComboParametros;
 import com.Modelos.Parametros;
@@ -52,9 +53,9 @@ public class GestionTareas extends javax.swing.JInternalFrame {
             JT_tiempo_transcurrido.setText("00:00:00:000");
 
             modeloCbClientes.actualizar();
-            modeloCbPrioridad.actualizarCombo(ModeloComboParametros.TIPO_PRIORIDAD);
-            modeloCbEstado.actualizarCombo(ModeloComboParametros.TIPO_ESTADO_TAREA);
-            modeloCbResponsable.actualizarCombo(ModeloComboParametros.TIPO_REPONSABLE_SOPORTE);
+            modeloCbPrioridad.actualizarCombo(CBTiposCarga.TIPO_PRIORIDAD);
+            modeloCbEstado.actualizarCombo(CBTiposCarga.TIPO_ESTADO_TAREA);
+            modeloCbResponsable.actualizarCombo(CBTiposCarga.TIPO_REPONSABLE_SOPORTE);
             modeloTBDetallesTareas.actualizarModelo(0L);
 
             JC_cliente.setModel(modeloCbClientes);
@@ -86,7 +87,7 @@ public class GestionTareas extends javax.swing.JInternalFrame {
             } catch (DAOException ex) {
                 GestionarRecursos.propagarError(ex);
             }
-            
+
             JC_cliente.setEnabled(false);
         } else {
             cargarModelos();
@@ -100,9 +101,9 @@ public class GestionTareas extends javax.swing.JInternalFrame {
 
         tarea.setTitulo(JT_nombre.getText());
         tarea.setCliente(obtenerClienteSeleccionado());
-        tarea.setPrioridad(obtenerParametroSeleccionad(JC_tipoPrioridad));
-        tarea.setEstado(obtenerParametroSeleccionad(JC_tipoEstado));
-        tarea.setAreaResponsable(obtenerParametroSeleccionad(JC_tipoResponsable));
+        tarea.setPrioridad(obtenerParametroSeleccionado(JC_tipoPrioridad));
+        tarea.setEstado(obtenerParametroSeleccionado(JC_tipoEstado));
+        tarea.setAreaResponsable(obtenerParametroSeleccionado(JC_tipoResponsable));
         tarea.setFechaInicio(obtenerFecha(JD_fecha_inicio));
         tarea.setFechaFin(obtenerFecha(JD_fecha_fin));
         tarea.setDuracionTarea(JT_tiempo_transcurrido.getText());
@@ -114,7 +115,7 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         return ((Cliente) JC_cliente.getSelectedItem()).getId();
     }
 
-    private int obtenerParametroSeleccionad(JComboBox combo) {
+    private int obtenerParametroSeleccionado(JComboBox combo) {
         return ((Parametros) combo.getSelectedItem()).getId();
     }
 
@@ -232,7 +233,6 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         JB_agregarDetalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/Iconos/plus.png"))); // NOI18N
         JB_agregarDetalle.setFocusable(false);
         JB_agregarDetalle.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        JB_agregarDetalle.setOpaque(true);
         JB_agregarDetalle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JB_agregarDetalleActionPerformed(evt);
@@ -242,7 +242,6 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         JB_eliminarDetalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/Iconos/minus.png"))); // NOI18N
         JB_eliminarDetalle.setFocusable(false);
         JB_eliminarDetalle.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        JB_eliminarDetalle.setOpaque(true);
         JB_eliminarDetalle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JB_eliminarDetalleActionPerformed(evt);
@@ -266,7 +265,7 @@ public class GestionTareas extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane2)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE))
                         .addGap(10, 10, 10))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -313,9 +312,11 @@ public class GestionTareas extends javax.swing.JInternalFrame {
 
         JC_cliente.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
 
+        JD_fecha_inicio.setToolTipText("Fecha Inicio Tarea");
         JD_fecha_inicio.setDateFormatString("dd/MM/yyyy");
         JD_fecha_inicio.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
 
+        JD_fecha_fin.setToolTipText("Fecha Fin Tarea");
         JD_fecha_fin.setDateFormatString("dd/MM/yyyy");
         JD_fecha_fin.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
 
@@ -470,7 +471,7 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         if (validaForma.compruebaCamposValidados()) {
             try {
                 guardarDatos();
-                
+
                 if (tarea.getId() == null) {
                     if (!comprobarEstadoFinalizado() && !comprobarTiempoDistintoAInicial()) {
                         manager.getDAOTareas().crear(tarea);
@@ -516,16 +517,16 @@ public class GestionTareas extends javax.swing.JInternalFrame {
 
     private void agregarADetalle() {
         if (!JT_detalleDescripcion.getText().equalsIgnoreCase("")) {
-            JT_detalleDescripcion.requestFocus();
 
             if (tareaDetalle == null) {
                 tareaDetalle = new TareaDetalle();
-                tareaDetalle.setIdDetalle((Long.MAX_VALUE / 10) - Long.valueOf(modeloTBDetallesTareas.getRowCount()));
+                tareaDetalle.setIdDetalle(Long.valueOf(modeloTBDetallesTareas.getRowCount() + 1));
             }
             tareaDetalle.setDescripcion(JT_detalleDescripcion.getText());
             modeloTBDetallesTareas.addElementToData(tareaDetalle);
             tareaDetalle = null;
             JT_detalleDescripcion.setText("");
+            JT_detalleDescripcion.requestFocus();
         } else {
             JOptionPane.showMessageDialog(this, "No puede agregar elementos vacios", "Agregar Detalle", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -535,9 +536,9 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         if (JT_datos.getRowCount() > 0) {
             Long idSeleccionado;
             if (JT_datos.getSelectedRow() >= 0) {
-                idSeleccionado = (Long) modeloTBDetallesTareas.getValueAt(JT_datos.getSelectedRow(), 1);
+                idSeleccionado = (Long) modeloTBDetallesTareas.getValueAt(JT_datos.getSelectedRow(), 0);
             } else {
-                idSeleccionado = (Long) modeloTBDetallesTareas.getValueAt(modeloTBDetallesTareas.getRowCount() - 1, 1);
+                idSeleccionado = (Long) modeloTBDetallesTareas.getValueAt(modeloTBDetallesTareas.getRowCount() - 1, 0);
             }
             tareaDetalle = modeloTBDetallesTareas.getElementById(idSeleccionado);
             modeloTBDetallesTareas.removeElementWithId(idSeleccionado);
@@ -564,8 +565,8 @@ public class GestionTareas extends javax.swing.JInternalFrame {
     private boolean comprobarTiempoDistintoAInicial() {
         return JT_tiempo_transcurrido.equals("00:00:00:000");
     }
-    
-    private boolean comprobarEstadoInicial(){
+
+    private boolean comprobarEstadoInicial() {
         return ((Parametros) modeloCbEstado.getSelectedItem()).equals(Parametros.INICIAL);
     }
 

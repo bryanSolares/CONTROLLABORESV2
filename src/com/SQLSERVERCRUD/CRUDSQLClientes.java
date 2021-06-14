@@ -10,9 +10,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import javafx.util.Pair;
 import javax.swing.JOptionPane;
 
 public class CRUDSQLClientes implements DAOClientes {
@@ -22,7 +21,7 @@ public class CRUDSQLClientes implements DAOClientes {
     private final String editarCliente = "UPDATE CLIENTES SET NOMBRE = ?, ESTADO = ?, TELEFONO = ?, TIPO_CLIENTE = ?, ID_SISTEMA = ?, CONTACTO = ? WHERE ID_CLIENTE = ?";
     private final String borrarCliente = "DELETE FROM CLIENTES WHERE ID_CLIENTE = ?";
     private final String buscarTodosLosClientes = "SELECT * FROM VC_CLIENTES";
-    private final String buscarUnCliente = "SELECT * FROM CLIENTES WHERE ID_CLIENTE = ?";
+    private final String buscarUnCliente = "SELECT * FROM VC_CLIENTES WHERE ID_CLIENTE = ?";
 
     public CRUDSQLClientes(Connection conexion) {
         this.conexion = conexion;
@@ -118,9 +117,9 @@ public class CRUDSQLClientes implements DAOClientes {
     }
 
     @Override
-    public Map<ResultSetMetaData, List<Cliente>> buscarTodos() throws DAOException {
+    public Pair<ResultSetMetaData, List<Cliente>> buscarTodos() throws DAOException {
 
-        Map<ResultSetMetaData, List<Cliente>> datosTabla = new HashMap<>();
+        Pair<ResultSetMetaData, List<Cliente>> datosTabla = null;
         List<Cliente> listaClientes = new ArrayList<>();
         ResultSetMetaData metaData;
         PreparedStatement consultaPreparada = null;
@@ -136,13 +135,13 @@ public class CRUDSQLClientes implements DAOClientes {
                 listaClientes.add(convierteElemento(resultados));
             }
 
-            datosTabla.put(metaData, listaClientes);
+            datosTabla = new Pair<>(metaData, listaClientes);
 
         } catch (SQLException e) {
             GestionarRecursos.propagarError(e);
         } finally {
-            GestionarRecursos.cerrarPreparedStatement(consultaPreparada);
-            GestionarRecursos.cerrarResultSet(resultados);
+          //  GestionarRecursos.cerrarPreparedStatement(consultaPreparada);
+          //  GestionarRecursos.cerrarResultSet(resultados);
         }
         return datosTabla;
     }

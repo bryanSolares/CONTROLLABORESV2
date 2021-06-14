@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.util.Pair;
 
 public class CRUDMYSQLClientes implements DAOClientes {
 
@@ -114,9 +115,11 @@ public class CRUDMYSQLClientes implements DAOClientes {
     }
 
     @Override
-    public Map<ResultSetMetaData, List<Cliente>> buscarTodos() throws DAOException {
+    //public Map<ResultSetMetaData, List<Cliente>> buscarTodos() throws DAOException {
+    public Pair<ResultSetMetaData, List<Cliente>> buscarTodos() throws DAOException {
 
-        Map<ResultSetMetaData, List<Cliente>> datosTabla = new HashMap<>();
+        ///Map<ResultSetMetaData, List<Cliente>> datosTabla = new HashMap<>();
+        Pair<ResultSetMetaData, List<Cliente>> datosTabla = null;// = new Pair<>(null,null);
         List<Cliente> listaClientes = new ArrayList<>();
         ResultSetMetaData metaData;
         PreparedStatement consultaPreparada = null;
@@ -132,7 +135,9 @@ public class CRUDMYSQLClientes implements DAOClientes {
                 listaClientes.add(convierteElemento(resultados));
             }
 
-            datosTabla.put(metaData, listaClientes);
+
+            datosTabla = new Pair<>(metaData, listaClientes); 
+            //datosTabla.put(metaData, listaClientes);
 
         } catch (SQLException e) {
             GestionarRecursos.propagarError(e);

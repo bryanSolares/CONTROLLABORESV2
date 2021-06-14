@@ -19,7 +19,8 @@ public class ModeloComboClientes extends ModeloComboGeneral<Cliente> {
     @Override
     public void actualizar() {
         try {
-            datos = daoClientes.buscarTodos().values().iterator().next().stream().filter(e -> e.getEstado() != Parametros.INACTIVO.getId()).collect(Collectors.toList());
+            //datos = daoClientes.buscarTodos().values().iterator().next().stream().filter(e -> e.getEstado() != Parametros.INACTIVO.getId()).collect(Collectors.toList());
+            datos = daoClientes.buscarTodos().getValue().stream().filter(e -> e.getEstado() != Parametros.INACTIVO.getId()).collect(Collectors.toList());
             super.actualizar();
         } catch (DAOException ex) {
             GestionarRecursos.propagarError(ex);

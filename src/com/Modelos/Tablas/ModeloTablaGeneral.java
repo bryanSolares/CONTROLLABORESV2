@@ -5,15 +5,14 @@ import com.Recursos.GestionarRecursos;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import javafx.util.Pair;
 import javax.swing.table.AbstractTableModel;
 
 public abstract class ModeloTablaGeneral<T, D> extends AbstractTableModel {
 
     protected D solicitaModelo;
-    protected Map<ResultSetMetaData, List<T>> resultadoSQL = new HashMap<>();
+    protected Pair<ResultSetMetaData, List<T>> resultadoSQL = null;
     protected List<T> listaDatos = new ArrayList<>();
     protected ResultSetMetaData metadatos;
 
@@ -22,8 +21,10 @@ public abstract class ModeloTablaGeneral<T, D> extends AbstractTableModel {
     }
 
     protected void actualizarModelo() throws DAOException {
-        this.listaDatos = resultadoSQL.values().iterator().next();
-        this.metadatos = resultadoSQL.keySet().iterator().next();
+        this.listaDatos = resultadoSQL.getValue();
+        //this.listaDatos = resultadoSQL.values().iterator().next();
+        this.metadatos = resultadoSQL.getKey();
+        //this.metadatos = resultadoSQL.keySet().iterator().next();
         this.fireTableDataChanged();
     }
 
@@ -62,8 +63,8 @@ public abstract class ModeloTablaGeneral<T, D> extends AbstractTableModel {
     }
 
     public void addElementToData(T element) {
-            this.listaDatos.add(element);
-            this.fireTableDataChanged();
+        this.listaDatos.add(element);
+        this.fireTableDataChanged();
     }
 
     public void removeElementWithIndex(int index) {
@@ -72,7 +73,7 @@ public abstract class ModeloTablaGeneral<T, D> extends AbstractTableModel {
             this.fireTableDataChanged();
         }
     }
-    
+
     public abstract void removeElementWithId(Long id);
 
     public T getElementByIndex(int index) {

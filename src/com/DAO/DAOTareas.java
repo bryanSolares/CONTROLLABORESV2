@@ -4,11 +4,11 @@ import com.Modelos.Tarea;
 import com.Modelos.TareaDetalle;
 import java.sql.ResultSetMetaData;
 import java.util.List;
-import java.util.Map;
+import javafx.util.Pair;
 
 public interface DAOTareas extends DAO<Tarea, Long> {
 
-    Map<ResultSetMetaData, List<TareaDetalle>> buscarDetalles(Long idTarea) throws DAOException;
+    Pair<ResultSetMetaData, List<TareaDetalle>> buscarDetalles(Long idTarea) throws DAOException;
 
     
     

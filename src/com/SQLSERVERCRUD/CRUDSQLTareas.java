@@ -14,9 +14,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import javafx.util.Pair;
 import javax.swing.JOptionPane;
 
 public class CRUDSQLTareas implements DAOTareas {
@@ -95,8 +94,8 @@ public class CRUDSQLTareas implements DAOTareas {
     }
 
     private void crearDetalles(Tarea tarea, Long idDisponible) throws DAOException {
-           
-        try { 
+
+        try {
             PreparedStatement insercionDetalle = conexion.prepareStatement(agregarDetalleTarea);
             tarea.obtenerListaDetalles().forEach(e -> {
                 try {
@@ -220,7 +219,7 @@ public class CRUDSQLTareas implements DAOTareas {
         tarea.setAreaResponsable(areaResponsable);
 
         try {
-            tarea.setListaDetalles(buscarDetalles(id).values().iterator().next());
+            tarea.setListaDetalles(buscarDetalles(id).getValue());
         } catch (DAOException ex) {
             GestionarRecursos.propagarError(ex);
         }
@@ -229,7 +228,7 @@ public class CRUDSQLTareas implements DAOTareas {
     }
 
     @Override
-    public Map<ResultSetMetaData, List<Tarea>> buscarTodos() throws DAOException {
+    public Pair<ResultSetMetaData, List<Tarea>> buscarTodos() throws DAOException {
 
         PreparedStatement consultaPreparada = null;
         ResultSet resultados = null;
@@ -381,9 +380,9 @@ public class CRUDSQLTareas implements DAOTareas {
 //        return null;
 //
 //    }
-    private Map<ResultSetMetaData, List<Tarea>> devuelveListadoTareasConMetadatos(ResultSet resultadoTareas) throws DAOException {
+    private Pair<ResultSetMetaData, List<Tarea>> devuelveListadoTareasConMetadatos(ResultSet resultadoTareas) throws DAOException {
 
-        Map<ResultSetMetaData, List<Tarea>> mapeoDatos = new HashMap<>();
+        Pair<ResultSetMetaData, List<Tarea>> mapeoDatos = null;
         ResultSetMetaData metadatos;
         List<Tarea> listaElementos = new ArrayList<>();
         PreparedStatement consultaPreparada = null;
@@ -397,7 +396,7 @@ public class CRUDSQLTareas implements DAOTareas {
             }
 
             metadatos = resultadoTareas.getMetaData();
-            mapeoDatos.put(metadatos, listaElementos);
+            mapeoDatos = new Pair<>(metadatos, listaElementos);
 
         } catch (SQLException ex) {
             GestionarRecursos.propagarError(ex);
@@ -410,8 +409,8 @@ public class CRUDSQLTareas implements DAOTareas {
     }
 
     @Override
-    public Map<ResultSetMetaData, List<TareaDetalle>> buscarDetalles(Long idTarea) throws DAOException {
-        Map<ResultSetMetaData, List<TareaDetalle>> datosTabla = new HashMap<>();
+    public Pair<ResultSetMetaData, List<TareaDetalle>> buscarDetalles(Long idTarea) throws DAOException {
+        Pair<ResultSetMetaData, List<TareaDetalle>> datosTabla = null;
         Tarea t = new Tarea();
         ResultSetMetaData metadata;
         PreparedStatement consultaPreparada = null;
@@ -427,7 +426,7 @@ public class CRUDSQLTareas implements DAOTareas {
             }
 
             metadata = resultados.getMetaData();
-            datosTabla.put(metadata, t.obtenerListaDetalles());
+            datosTabla = new Pair<>(metadata, t.obtenerListaDetalles());
 
         } catch (SQLException ex) {
             GestionarRecursos.propagarError(ex);

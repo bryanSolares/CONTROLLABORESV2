@@ -20,8 +20,8 @@ public class ModeloTablaDetalleTareas extends ModeloTablaGeneral<TareaDetalle, D
 
         if (listadoDatos != null) {
             resultadoSQL = solicitaModelo.buscarDetalles(0L);
-            this.listaDatos = listadoDatos;
-            //this.metadatos = resultadoSQL.keySet().iterator().next();
+            this.listaDatos.clear();
+            this.listaDatos.addAll(listadoDatos);
             this.metadatos = resultadoSQL.getKey();
             fireTableDataChanged();
         } else {
@@ -29,20 +29,7 @@ public class ModeloTablaDetalleTareas extends ModeloTablaGeneral<TareaDetalle, D
         }
 
     }
-
-    @Override
-    public void removeElementWithId(Long id) {
-        if (id != 0) {
-            listaDatos.removeIf(e -> e.getIdDetalle().equals(id));
-            fireTableDataChanged();
-        }
-    }
-
-    @Override
-    public TareaDetalle getElementById(Long id) {
-        return listaDatos.stream().filter(e -> e.getIdDetalle().equals(id)).findAny().get();
-    }
-
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         TareaDetalle detalle = listaDatos.get(rowIndex);

@@ -156,7 +156,6 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         JC_tipoResponsable = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         JT_tiempo_transcurrido = new javax.swing.JFormattedTextField();
 
         setIconifiable(true);
@@ -280,7 +279,7 @@ public class GestionTareas extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -328,23 +327,11 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel8.setText("Tiempo Transcurrido:");
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         JT_tiempo_transcurrido.setEditable(false);
         JT_tiempo_transcurrido.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("hh:mm:ss"))));
         JT_tiempo_transcurrido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         JT_tiempo_transcurrido.setText("00:00:00:000");
         JT_tiempo_transcurrido.setFont(new java.awt.Font("Segoe UI Black", 0, 36)); // NOI18N
-        JT_tiempo_transcurrido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JT_tiempo_transcurridoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -383,17 +370,9 @@ public class GestionTareas extends javax.swing.JInternalFrame {
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(JC_tipoEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(JC_tipoResponsable, 0, 450, Short.MAX_VALUE))
-                            .addComponent(jLabel8))
+                            .addComponent(jLabel8)
+                            .addComponent(JT_tiempo_transcurrido, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(JT_tiempo_transcurrido, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(163, 163, 163)
-                        .addComponent(jButton1)))
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -430,8 +409,6 @@ public class GestionTareas extends javax.swing.JInternalFrame {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JT_tiempo_transcurrido, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71)
-                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -496,7 +473,9 @@ public class GestionTareas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JB_guardarActionPerformed
 
     private void JB_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_salirActionPerformed
-        this.dispose();
+        if (JOptionPane.showConfirmDialog(this, "Seguro que desea salir", "Salir", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE) == 0) {
+            this.dispose();
+        }
     }//GEN-LAST:event_JB_salirActionPerformed
 
     private void JB_agregarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_agregarDetalleActionPerformed
@@ -507,20 +486,11 @@ public class GestionTareas extends javax.swing.JInternalFrame {
         eliminarDeDetalle();
     }//GEN-LAST:event_JB_eliminarDetalleActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.out.println(JC_cliente.getSelectedItem());
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void JT_tiempo_transcurridoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JT_tiempo_transcurridoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JT_tiempo_transcurridoActionPerformed
-
     private void agregarADetalle() {
         if (!JT_detalleDescripcion.getText().equalsIgnoreCase("")) {
 
             if (tareaDetalle == null) {
                 tareaDetalle = new TareaDetalle();
-                tareaDetalle.setIdDetalle(Long.valueOf(modeloTBDetallesTareas.getRowCount() + 1));
             }
             tareaDetalle.setDescripcion(JT_detalleDescripcion.getText());
             modeloTBDetallesTareas.addElementToData(tareaDetalle);
@@ -528,20 +498,18 @@ public class GestionTareas extends javax.swing.JInternalFrame {
             JT_detalleDescripcion.setText("");
             JT_detalleDescripcion.requestFocus();
         } else {
-            JOptionPane.showMessageDialog(this, "No puede agregar elementos vacios", "Agregar Detalle", JOptionPane.INFORMATION_MESSAGE);
+            GestionarRecursos.generarMensaje("No puede agregar elementos vacios", "Agregar Detalle", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     private void eliminarDeDetalle() {
         if (JT_datos.getRowCount() > 0) {
-            Long idSeleccionado;
-            if (JT_datos.getSelectedRow() >= 0) {
-                idSeleccionado = (Long) modeloTBDetallesTareas.getValueAt(JT_datos.getSelectedRow(), 0);
+            int pos = this.JT_datos.getSelectedRow();
+            if (pos != -1) {
+                this.tareaDetalle = modeloTBDetallesTareas.removeElementWithIndex(pos);
             } else {
-                idSeleccionado = (Long) modeloTBDetallesTareas.getValueAt(modeloTBDetallesTareas.getRowCount() - 1, 0);
+                this.tareaDetalle = modeloTBDetallesTareas.removeLastElement();
             }
-            tareaDetalle = modeloTBDetallesTareas.getElementById(idSeleccionado);
-            modeloTBDetallesTareas.removeElementWithId(idSeleccionado);
             JT_detalleDescripcion.setText(tareaDetalle.getDescripcion());
         } else {
             JOptionPane.showMessageDialog(this, "No elementos para eliminar", "Eliminar detalle", JOptionPane.INFORMATION_MESSAGE);
@@ -563,7 +531,7 @@ public class GestionTareas extends javax.swing.JInternalFrame {
     }
 
     private boolean comprobarTiempoDistintoAInicial() {
-        return JT_tiempo_transcurrido.equals("00:00:00:000");
+        return "00:00:00:000".equals(JT_tiempo_transcurrido);
     }
 
     private boolean comprobarEstadoInicial() {
@@ -590,7 +558,6 @@ public class GestionTareas extends javax.swing.JInternalFrame {
     private javax.swing.JTextArea JT_detalleDescripcion;
     private javax.swing.JTextField JT_nombre;
     private javax.swing.JFormattedTextField JT_tiempo_transcurrido;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

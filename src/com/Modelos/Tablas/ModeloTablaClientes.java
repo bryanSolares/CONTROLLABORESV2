@@ -17,7 +17,6 @@ public class ModeloTablaClientes extends ModeloTablaGeneral<Cliente, DAOClientes
         super.actualizarModelo();
     }
 
-    @Override
     public Cliente getElementById(Long id) {
         return listaDatos.stream().filter(e -> e.getId().equals(id)).findAny().get();
     }
@@ -46,7 +45,6 @@ public class ModeloTablaClientes extends ModeloTablaGeneral<Cliente, DAOClientes
         }
     }
 
-    @Override
     public void removeElementWithId(Long id) {
         if (id != 0) {
             listaDatos.removeIf(e -> e.getId().equals(id));

@@ -99,7 +99,7 @@ public class CRUDSQLClientes implements DAOClientes {
         GestionarRecursos.generarMensaje("Cliente eliminado con Éxito", "Eliminación de Cliente", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public Cliente convierteElemento(ResultSet resultado) throws SQLException {
+    public Cliente convierteDataACliente(ResultSet resultado) throws SQLException {
         Cliente cliente;
         Long id = resultado.getLong(1);
         String nombre = resultado.getString(2);
@@ -132,7 +132,7 @@ public class CRUDSQLClientes implements DAOClientes {
             metaData = resultados.getMetaData();
 
             while (resultados.next()) {
-                listaClientes.add(convierteElemento(resultados));
+                listaClientes.add(convierteDataACliente(resultados));
             }
 
             datosTabla = new Pair<>(metaData, listaClientes);
@@ -159,7 +159,7 @@ public class CRUDSQLClientes implements DAOClientes {
             resultados = consultaPreparada.executeQuery();
 
             if (resultados.next()) {
-                cliente = convierteElemento(resultados);
+                cliente = convierteDataACliente(resultados);
             }
 
         } catch (SQLException e) {

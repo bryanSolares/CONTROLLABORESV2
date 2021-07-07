@@ -1,17 +1,51 @@
-
 package com.Graficos.Principal;
 
-import java.awt.MouseInfo;
-
+import com.DAO.DAOException;
+import com.DAO.DAOTareas;
+import com.DAO.Managers.DAOManager;
+import com.Graficos.Tareas.TareaResumen;
+import com.Modelos.Tarea;
+import com.Recursos.GestionarRecursos;
+import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListadoTareas extends javax.swing.JInternalFrame {
-
-
-    public ListadoTareas() {
+    
+    private final DAOManager daoManager;
+    private final DAOTareas daoTareas;
+    private List<Tarea> listaTareas;
+    private final List<TareaResumen> listaItems;
+    
+    public ListadoTareas(DAOManager manager) {
         initComponents();
+        this.daoTareas = manager.getDAOTareas();
+        this.listaTareas = new ArrayList<>();
+        this.listaItems = new ArrayList<>();
+        this.daoManager = manager;
+        this.iniciar();
     }
-
-   
+    
+    private void iniciar() {
+        try {
+            this.listaTareas = this.daoTareas.buscarTodos().getValue();
+            this.renderizarItems();
+        } catch (DAOException ex) {
+            GestionarRecursos.propagarError(ex);
+        }
+    }
+    
+    public void renderizarItems() {
+        this.listaTareas.forEach(tarea -> {
+            TareaResumen item = new TareaResumen(tarea, this.daoManager);
+            listaItems.add(item);
+            this.JP_area_pendientes.add(new TareaResumen(tarea, this.daoManager));
+        });
+        this.JP_area_pendientes.setLayout(new GridLayout(this.listaItems.size(), 1));
+        this.updateUI();
+        
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -19,6 +53,8 @@ public class ListadoTareas extends javax.swing.JInternalFrame {
         JI_paramover = new javax.swing.JInternalFrame();
         JI_area_en_proceso = new javax.swing.JInternalFrame();
         JI_area_pendientes = new javax.swing.JInternalFrame();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        JP_area_pendientes = new javax.swing.JPanel();
         JI_area_finalizado = new javax.swing.JInternalFrame();
 
         JI_paramover.setVisible(true);
@@ -39,83 +75,48 @@ public class ListadoTareas extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("ESTADOS DE TAREAS");
-        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                formMouseMoved(evt);
-            }
-        });
 
         JI_area_en_proceso.setResizable(true);
         JI_area_en_proceso.setTitle("EN PROCESO");
         JI_area_en_proceso.setVisible(true);
-
-        javax.swing.GroupLayout JI_area_en_procesoLayout = new javax.swing.GroupLayout(JI_area_en_proceso.getContentPane());
-        JI_area_en_proceso.getContentPane().setLayout(JI_area_en_procesoLayout);
-        JI_area_en_procesoLayout.setHorizontalGroup(
-            JI_area_en_procesoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 347, Short.MAX_VALUE)
-        );
-        JI_area_en_procesoLayout.setVerticalGroup(
-            JI_area_en_procesoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        JI_area_en_proceso.getContentPane().setLayout(new java.awt.GridLayout(20, 0));
 
         JI_area_pendientes.setResizable(true);
         JI_area_pendientes.setTitle("PENDIENTES");
         JI_area_pendientes.setToolTipText("");
         JI_area_pendientes.setVisible(true);
 
-        javax.swing.GroupLayout JI_area_pendientesLayout = new javax.swing.GroupLayout(JI_area_pendientes.getContentPane());
-        JI_area_pendientes.getContentPane().setLayout(JI_area_pendientesLayout);
-        JI_area_pendientesLayout.setHorizontalGroup(
-            JI_area_pendientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 294, Short.MAX_VALUE)
-        );
-        JI_area_pendientesLayout.setVerticalGroup(
-            JI_area_pendientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 509, Short.MAX_VALUE)
-        );
+        JP_area_pendientes.setLayout(new java.awt.GridLayout());
+        jScrollPane1.setViewportView(JP_area_pendientes);
+
+        JI_area_pendientes.getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         JI_area_finalizado.setResizable(true);
         JI_area_finalizado.setTitle("FINALIZADO");
         JI_area_finalizado.setVisible(true);
-
-        javax.swing.GroupLayout JI_area_finalizadoLayout = new javax.swing.GroupLayout(JI_area_finalizado.getContentPane());
-        JI_area_finalizado.getContentPane().setLayout(JI_area_finalizadoLayout);
-        JI_area_finalizadoLayout.setHorizontalGroup(
-            JI_area_finalizadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 312, Short.MAX_VALUE)
-        );
-        JI_area_finalizadoLayout.setVerticalGroup(
-            JI_area_finalizadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(JI_area_pendientes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JI_area_en_proceso)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JI_area_finalizado)
-                .addContainerGap())
+                .addGap(1, 1, 1)
+                .addComponent(JI_area_pendientes, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                .addGap(1, 1, 1)
+                .addComponent(JI_area_en_proceso, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(JI_area_finalizado, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                .addGap(1, 1, 1))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JI_area_pendientes)
-            .addComponent(JI_area_en_proceso)
-            .addComponent(JI_area_finalizado)
+            .addComponent(JI_area_pendientes, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
+            .addComponent(JI_area_en_proceso, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
+            .addComponent(JI_area_finalizado, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
-        System.out.println(MouseInfo.getPointerInfo().getLocation());
-    }//GEN-LAST:event_formMouseMoved
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -123,5 +124,7 @@ public class ListadoTareas extends javax.swing.JInternalFrame {
     private javax.swing.JInternalFrame JI_area_finalizado;
     private javax.swing.JInternalFrame JI_area_pendientes;
     private javax.swing.JInternalFrame JI_paramover;
+    private javax.swing.JPanel JP_area_pendientes;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

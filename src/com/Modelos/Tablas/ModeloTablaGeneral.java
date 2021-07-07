@@ -4,7 +4,7 @@ import com.DAO.DAOException;
 import com.Recursos.GestionarRecursos;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javafx.util.Pair;
 import javax.swing.table.AbstractTableModel;
@@ -13,7 +13,7 @@ public abstract class ModeloTablaGeneral<T, D> extends AbstractTableModel {
 
     protected D solicitaModelo;
     protected Pair<ResultSetMetaData, List<T>> resultadoSQL = null;
-    protected List<T> listaDatos = new ArrayList<>();
+    protected LinkedList<T> listaDatos = new LinkedList<>();
     protected ResultSetMetaData metadatos;
 
     public ModeloTablaGeneral(D solicitaModelo) {
@@ -21,10 +21,9 @@ public abstract class ModeloTablaGeneral<T, D> extends AbstractTableModel {
     }
 
     protected void actualizarModelo() throws DAOException {
-        this.listaDatos = resultadoSQL.getValue();
-        //this.listaDatos = resultadoSQL.values().iterator().next();
+        this.listaDatos.clear();
+        this.listaDatos.addAll(resultadoSQL.getValue());
         this.metadatos = resultadoSQL.getKey();
-        //this.metadatos = resultadoSQL.keySet().iterator().next();
         this.fireTableDataChanged();
     }
 
@@ -63,22 +62,30 @@ public abstract class ModeloTablaGeneral<T, D> extends AbstractTableModel {
     }
 
     public void addElementToData(T element) {
-        this.listaDatos.add(element);
+        this.listaDatos.addLast(element);
         this.fireTableDataChanged();
     }
 
-    public void removeElementWithIndex(int index) {
-        if (index <= listaDatos.size() && index > -1) {
-            this.listaDatos.remove(index);
-            this.fireTableDataChanged();
-        }
+    public T removeFirstElement() {
+        T elementDeleted = this.listaDatos.removeFirst();
+        this.fireTableDataChanged();
+        return elementDeleted;
     }
 
-    public abstract void removeElementWithId(Long id);
+    public T removeLastElement() {
+        T elementDeleted = this.listaDatos.removeLast();
+        this.fireTableDataChanged();
+        return elementDeleted;
+    }
+
+    public T removeElementWithIndex(int index) {
+        T elementDeleted = this.listaDatos.remove(index);
+        this.fireTableDataChanged();
+        return elementDeleted;
+    }
 
     public T getElementByIndex(int index) {
         return this.listaDatos.get(index);
     }
 
-    public abstract T getElementById(Long id);
 }

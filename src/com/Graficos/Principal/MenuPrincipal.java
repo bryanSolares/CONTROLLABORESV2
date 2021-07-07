@@ -205,7 +205,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_JM_salirMousePressed
 
     private void pasteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteMenuItemActionPerformed
-        ListadoTareas lt = new ListadoTareas();
+        ListadoTareas lt = new ListadoTareas(this.manager);
         this.desktopPane.add(lt);
         lt.show();
     }//GEN-LAST:event_pasteMenuItemActionPerformed
